@@ -10,6 +10,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [popup, setPopup] = useState(null);
   const [cards, setCards] = useState([]);
+  const [cardToDelete, setCardToDelete] = useState(null);
 
   useEffect(() => {
     api
@@ -44,8 +45,14 @@ function App() {
         setCards((state) =>
           state.filter((currentCard) => currentCard._id !== card._id),
         );
+        setCardToDelete(null);
+        handleClosePopup();
       })
       .catch((error) => console.error(error));
+  }
+
+  function handleDeleteClick(card) {
+    setCardToDelete(card);
   }
 
   function handleOpenPopup(popup) {
@@ -54,6 +61,7 @@ function App() {
 
   function handleClosePopup() {
     setPopup(null);
+    setCardToDelete(null);
   }
 
   useEffect(() => {
@@ -107,6 +115,8 @@ function App() {
         handleUpdateUser,
         handleUpdateAvatar,
         handleAddPictureSubmit,
+        handleCardDelete,
+        cardToDelete,
       }}
     >
       <div className="page">
@@ -117,7 +127,7 @@ function App() {
           popup={popup}
           cards={cards}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onDeleteClick={handleDeleteClick}
         />
         <Footer />
       </div>

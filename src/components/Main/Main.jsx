@@ -9,7 +9,7 @@ import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 
 export default function Main(props) {
-  const { onOpenPopup, onClosePopup, popup, cards, onCardLike, onCardDelete } =
+  const { onOpenPopup, onClosePopup, popup, cards, onCardLike, onDeleteClick } =
     props;
   const { currentUser } = useContext(CurrentUserContext);
 
@@ -70,7 +70,8 @@ export default function Main(props) {
             card={card}
             onImageClick={onOpenPopup}
             onCardLike={onCardLike}
-            onCardDelete={onCardDelete}
+            onDeleteClick={onDeleteClick}
+            onOpenConfirmDelete={() => onOpenPopup(confirmDeletePopup)}
           />
         ))}
       </ul>

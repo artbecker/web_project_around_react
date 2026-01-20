@@ -1,25 +1,24 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import CurrentUserContext from "../../../../contexts/CurrentUserContext";
+import { useFormValidation } from "../../../../hooks/useFormValidation";
 
 export default function EditProfile() {
   const userContext = useContext(CurrentUserContext);
   const { currentUser, handleUpdateUser } = userContext;
 
-  const [name, setName] = useState(currentUser.name);
-  const [description, setDescription] = useState(currentUser.about);
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormValidation();
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
+  useEffect(() => {
+    resetForm({ name: currentUser.name, about: currentUser.about });
+  }, [currentUser, resetForm]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    handleUpdateUser({ name, about: description });
+    if (isValid) {
+      handleUpdateUser({ name: values.name, about: values.about });
+    }
   };
 
   return (
@@ -39,10 +38,12 @@ export default function EditProfile() {
         required
         name="name"
         placeholder="Name"
-        value={name}
-        onChange={handleNameChange}
+        value={values.name || ""}
+        onChange={handleChange}
       />
-      <span className="form__input-error profile-name-input-error"></span>
+      <span className="form__input-error_active profile-name-input-error">
+        {errors.name}
+      </span>
       <input
         id="profile-about-input"
         className="form__input"
@@ -52,11 +53,18 @@ export default function EditProfile() {
         required
         name="about"
         placeholder="About me"
-        value={description}
-        onChange={handleDescriptionChange}
+        value={values.about || ""}
+        onChange={handleChange}
       />
-      <span className="form__input-error profile-about-input-error"></span>
-      <button className="form__submit">Save</button>
+      <span className="form__input-error_active profile-about-input-error">
+        {errors.about}
+      </span>
+      <button
+        className={`form__submit ${!isValid ? "form__submit_disabled" : ""}`}
+        disabled={!isValid}
+      >
+        Save
+      </button>
     </form>
   );
 }

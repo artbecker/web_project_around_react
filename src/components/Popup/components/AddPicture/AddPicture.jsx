@@ -1,17 +1,20 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import CurrentUserContext from "../../../../contexts/CurrentUserContext";
+import { useFormValidation } from "../../../../hooks/useFormValidation";
 
 export default function AddPicture() {
   const { handleAddPictureSubmit } = useContext(CurrentUserContext);
-  const nameRef = useRef();
-  const linkRef = useRef();
+
+  const { values, handleChange, errors, isValid } = useFormValidation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    console.log("values:", values);
+
     handleAddPictureSubmit({
-      name: nameRef.current.value,
-      link: linkRef.current.value,
+      name: values.name || "",
+      link: values.link || "",
     });
   };
 
@@ -22,7 +25,6 @@ export default function AddPicture() {
       noValidate
     >
       <input
-        ref={nameRef}
         id="picture-title-input"
         className="form__input"
         type="text"
@@ -31,19 +33,31 @@ export default function AddPicture() {
         required
         name="name"
         placeholder="Title"
+        value={values.name || ""}
+        onChange={handleChange}
       />
-      <span className="form__input-error picture-title-input-error"></span>
+      <span className="form__input-error_active picture-title-input-error">
+        {errors.name || ""}
+      </span>
       <input
-        ref={linkRef}
         id="picture-url-input"
         className="form__input"
         required
         type="url"
         name="link"
         placeholder="Image URL"
+        value={values.link || ""}
+        onChange={handleChange}
       />
-      <span className="form__input-error picture-url-input-error"></span>
-      <button className="form__submit">Add</button>
+      <span className="form__input-error_active picture-url-input-error">
+        {errors.link || ""}
+      </span>
+      <button
+        className={`form__submit ${!isValid ? "form__submit_disabled" : ""}`}
+        disabled={!isValid}
+      >
+        Add
+      </button>
     </form>
   );
 }

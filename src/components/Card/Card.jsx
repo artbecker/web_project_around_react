@@ -5,7 +5,8 @@ import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 export default function Card(props) {
   const { currentUser } = useContext(CurrentUserContext);
   const { name, link, isLiked } = props.card;
-  const { onImageClick, onCardLike, onCardDelete } = props;
+  const { onImageClick, onCardLike, onDeleteClick, onOpenConfirmDelete } =
+    props;
   const cardLikeButtonClassName = `like-button ${isLiked ? "like-button_active" : ""}`;
 
   function handleImageClick() {
@@ -21,7 +22,8 @@ export default function Card(props) {
   }
 
   function handleDeleteClick() {
-    onCardDelete(props.card);
+    onDeleteClick(props.card);
+    onOpenConfirmDelete();
   }
 
   return (
