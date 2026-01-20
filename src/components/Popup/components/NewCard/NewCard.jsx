@@ -2,7 +2,7 @@ import { useContext } from "react";
 import CurrentUserContext from "../../../../contexts/CurrentUserContext";
 import { useFormValidation } from "../../../../hooks/useFormValidation";
 
-export default function AddPicture() {
+export default function NewCard() {
   const { handleAddPictureSubmit } = useContext(CurrentUserContext);
 
   const { values, handleChange, errors, isValid } = useFormValidation();

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Popup from "../Popup/Popup.jsx";
 import EditAvatar from "../Popup/components/EditAvatar/EditAvatar.jsx";
 import EditProfile from "../Popup/components/EditProfile/EditProfile.jsx";
-import AddPicture from "../Popup/components/NewCard/NewCard.jsx";
+import NewCard from "../Popup/components/NewCard/NewCard.jsx";
 import Card from "../Card/Card.jsx";
 import ConfirmDelete from "../Popup/components/ConfirmDelete/ConfirmDelete.jsx";
 import api from "../../utils/api.js";
@@ -25,7 +25,7 @@ export default function Main(props) {
 
   const addPicturePopup = {
     title: "Add Picture",
-    children: <AddPicture />,
+    children: <NewCard />,
   };
 
   const confirmDeletePopup = {
