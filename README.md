@@ -4,7 +4,7 @@
 
 # Initial structure made with React JS.
 
-# Popup opening features made using React, form submitting and API features still to do in upcoming sprint
+# All features made using React, including form submitting, validation and API consuming
 
 # Nota ao revisor: deixei lang="en" pois fiz todo o projeto em inglês.
 
